@@ -35,15 +35,7 @@ class RestaurantRouteHome extends StatelessWidget {
 
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: RestaurantCard(
-                  image: Image.network(modelRestaurant.thumbUrl),
-                  name: modelRestaurant.name,
-                  tags: modelRestaurant.tags,
-                  ratings: modelRestaurant.ratings,
-                  ratingsCount: modelRestaurant.ratingsCount,
-                  deliveryTime: modelRestaurant.deliveryTime,
-                  deliveryFee: modelRestaurant.deliveryFee,
-                ),
+                child: RestaurantCard.fromModel(modelRestaurant: modelRestaurant),
               );
             },
             separatorBuilder: (context, index) => const SizedBox(height: 10),
