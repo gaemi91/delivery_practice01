@@ -1,5 +1,6 @@
 import 'package:delivery_practice01/common/const/colors.dart';
 import 'package:delivery_practice01/common/layout/layout_default.dart';
+import 'package:delivery_practice01/restaurant/route/restaurant_route_home.dart';
 import 'package:flutter/material.dart';
 
 class CommonRouteTap extends StatefulWidget {
@@ -41,7 +42,7 @@ class _CommonRouteTapState extends State<CommonRouteTap> with SingleTickerProvid
         controller: tabController,
         physics: NeverScrollableScrollPhysics(),
         children: [
-          Center(child: Text('홈')),
+          RestaurantRouteHome(),
           Center(child: Text('음식')),
           Center(child: Text('주문')),
           Center(child: Text('프로필')),
