@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:delivery_practice01/common/route/common_route_tap.dart';
 import 'package:delivery_practice01/common/component/custom_text_form_field.dart';
 import 'package:delivery_practice01/common/const/colors.dart';
 import 'package:delivery_practice01/common/const/data.dart';
@@ -68,7 +68,22 @@ class _UserRouteLogInState extends State<UserRouteLogIn> {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          final rawIdPass = '$inputId:$inputPass';
+
+                          Codec<String, String> stringToBase64 = utf8.fuse(base64);
+                          final token = stringToBase64.encoder.convert(rawIdPass);
+
+                          final resp = await dio.post(
+                            'http://$ip/auth/login',
+                            options: Options(headers: {'authorization': 'Basic $token'}),
+                          );
+
+                          await storage.write(key: Token_key_Access, value: resp.data[Token_key_Access]);
+                          await storage.write(key: Token_key_Refresh, value: resp.data[Token_key_Refresh]);
+
+                          Navigator.of(context).push(MaterialPageRoute(builder: (_) => CommonRouteTap()));
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color_Main,
                         ),
