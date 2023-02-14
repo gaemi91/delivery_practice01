@@ -43,7 +43,7 @@ class RestaurantCard extends StatelessWidget {
             renderDot(),
             _IconData(iconData: Icons.timelapse, label: '$deliveryTime분'),
             renderDot(),
-            _IconData(iconData: Icons.monetization_on, label: '$deliveryFee'),
+            _IconData(iconData: Icons.monetization_on, label: deliveryFee == 0 ? '무료' : '$deliveryFee'),
           ],
         )
       ],
