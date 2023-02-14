@@ -31,22 +31,12 @@ class RestaurantRouteHome extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
               final listItems = snapshot.data![index];
-              final ModelRestaurant modelRestaurant = ModelRestaurant(
-                id: listItems['id'],
-                name: listItems['name'],
-                thumbUrl: listItems['thumbUrl'],
-                tags: List<String>.from(listItems['tags']),
-                priceRange: PriceRange.values.firstWhere((e) => e.name == listItems['priceRange']),
-                ratings: listItems['ratings'],
-                ratingsCount: listItems['ratingsCount'],
-                deliveryTime: listItems['deliveryTime'],
-                deliveryFee: listItems['deliveryFee'],
-              );
+              final ModelRestaurant modelRestaurant = ModelRestaurant.fromJson(json: listItems);
 
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: RestaurantCard(
-                  image: Image.network('http://$ip${modelRestaurant.thumbUrl}'),
+                  image: Image.network(modelRestaurant.thumbUrl),
                   name: modelRestaurant.name,
                   tags: modelRestaurant.tags,
                   ratings: modelRestaurant.ratings,
