@@ -1,6 +1,7 @@
 import 'package:delivery_practice01/common/const/data.dart';
 import 'package:delivery_practice01/restaurant/component/restaurant_card.dart';
 import 'package:delivery_practice01/restaurant/model/model_restaurant_card.dart';
+import 'package:delivery_practice01/restaurant/route/restaurant_route_detail.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -35,8 +36,15 @@ class RestaurantRouteMain extends StatelessWidget {
                 final ModelRestaurantCard modelRestaurantCard =
                     ModelRestaurantCard.fromJson(json: snapshot.data![index]);
 
-                return RestaurantCard.fromModel(
-                  model: modelRestaurantCard,
+                return InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => RestaurantRouteDetail(id: modelRestaurantCard.id),
+                    ));
+                  },
+                  child: RestaurantCard.fromModel(
+                    model: modelRestaurantCard,
+                  ),
                 );
               },
               separatorBuilder: (context, index) {
