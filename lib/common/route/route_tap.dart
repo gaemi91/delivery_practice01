@@ -1,5 +1,6 @@
 import 'package:delivery_practice01/common/const/colors.dart';
 import 'package:delivery_practice01/common/layout/layout_default.dart';
+import 'package:delivery_practice01/restaurant/route/restaurant_route_main.dart';
 import 'package:flutter/material.dart';
 
 class RouteTap extends StatefulWidget {
@@ -41,7 +42,7 @@ class _RouteTapState extends State<RouteTap> with SingleTickerProviderStateMixin
         controller: tabController,
         physics: const NeverScrollableScrollPhysics(),
         children: [
-          Center(child: Text('홈')),
+          RestaurantRouteMain(),
           Center(child: Text('음식')),
           Center(child: Text('주문')),
           Center(child: Text('프로필')),
