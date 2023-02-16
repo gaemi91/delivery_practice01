@@ -1,5 +1,6 @@
-import 'package:delivery_practice01/user/route/user_route_login.dart';
+import 'package:delivery_practice01/common/route/route_splash.dart';
 import 'package:flutter/material.dart';
+
 
 void main() {
   runApp(const _App());
@@ -15,7 +16,7 @@ class _App extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'notosans'
       ),
-      home: UserRouteLogIn()
+      home: RouteSplash()
     );
   }
 }
