@@ -44,7 +44,7 @@ class RestaurantRouteHome extends StatelessWidget {
                       );
                     }));
                   },
-                  child: RestaurantCard.fromModel(modelRestaurant: modelRestaurant),
+                  child: RestaurantCard.fromModel(model: modelRestaurant),
                 ),
               );
             },
