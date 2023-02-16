@@ -4,14 +4,19 @@ import 'package:delivery_practice01/restaurant/component/restaurant_card.dart';
 import 'package:flutter/material.dart';
 
 class RestaurantRouteDetail extends StatelessWidget {
-  const RestaurantRouteDetail({Key? key}) : super(key: key);
+  final String id;
+
+  const RestaurantRouteDetail({
+    required this.id,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return LayoutDefault(
       title: '불타는 떡볶이',
       child: CustomScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         slivers: [
           SliverToBoxAdapter(
             child: RestaurantCard(

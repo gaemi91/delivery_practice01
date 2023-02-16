@@ -39,7 +39,9 @@ class RestaurantRouteHome extends StatelessWidget {
                 child: InkWell(
                   onTap: (){
                     Navigator.of(context).push(MaterialPageRoute(builder: (_){
-                      return RestaurantRouteDetail();
+                      return RestaurantRouteDetail(
+                        id: modelRestaurant.id,
+                      );
                     }));
                   },
                   child: RestaurantCard.fromModel(modelRestaurant: modelRestaurant),

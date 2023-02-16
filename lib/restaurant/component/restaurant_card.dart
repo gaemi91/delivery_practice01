@@ -35,6 +35,7 @@ class RestaurantCard extends StatelessWidget {
       ratingsCount: modelRestaurant.ratingsCount,
       deliveryTime: modelRestaurant.deliveryTime,
       deliveryFee: modelRestaurant.deliveryFee,
+
     );
   }
 
