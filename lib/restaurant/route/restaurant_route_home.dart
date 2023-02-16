@@ -1,6 +1,7 @@
 import 'package:delivery_practice01/common/const/data.dart';
 import 'package:delivery_practice01/restaurant/component/restaurant_card.dart';
 import 'package:delivery_practice01/restaurant/model/model_restaurant.dart';
+import 'package:delivery_practice01/restaurant/route/restaurant_route_detail.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +36,14 @@ class RestaurantRouteHome extends StatelessWidget {
 
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: RestaurantCard.fromModel(modelRestaurant: modelRestaurant),
+                child: InkWell(
+                  onTap: (){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (_){
+                      return RestaurantRouteDetail();
+                    }));
+                  },
+                  child: RestaurantCard.fromModel(modelRestaurant: modelRestaurant),
+                ),
               );
             },
             separatorBuilder: (context, index) => const SizedBox(height: 10),

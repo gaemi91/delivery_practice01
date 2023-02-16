@@ -10,6 +10,8 @@ class RestaurantCard extends StatelessWidget {
   final int ratingsCount;
   final int deliveryTime;
   final int deliveryFee;
+  final bool isDetail;
+  final String? detail;
 
   const RestaurantCard({
     required this.image,
@@ -19,6 +21,8 @@ class RestaurantCard extends StatelessWidget {
     required this.ratingsCount,
     required this.deliveryTime,
     required this.deliveryFee,
+    this.isDetail = false,
+    this.detail,
     Key? key,
   }) : super(key: key);
 
@@ -39,26 +43,41 @@ class RestaurantCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        ClipRRect(
-          borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-          child: image,
-        ),
+        if (isDetail) image,
+        if (!isDetail)
+          ClipRRect(
+            borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+            child: image,
+          ),
         const SizedBox(height: 10.0),
-        Text(name, style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500)),
-        const SizedBox(height: 2.0),
-        Text(tags.join(" · "), style: const TextStyle(color: Color_Text, fontSize: 15.0)),
-        const SizedBox(height: 2.0),
-        Row(
-          children: [
-            _IconData(iconData: Icons.star, label: '$ratings'),
-            renderDot(),
-            _IconData(iconData: Icons.receipt, label: '$ratingsCount'),
-            renderDot(),
-            _IconData(iconData: Icons.timelapse, label: '$deliveryTime분'),
-            renderDot(),
-            _IconData(iconData: Icons.monetization_on, label: deliveryFee == 0 ? '무료' : '$deliveryFee'),
-          ],
-        )
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: isDetail ? 10.0 : 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(name, style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500)),
+              const SizedBox(height: 2.0),
+              Text(tags.join(" · "), style: const TextStyle(color: Color_Text, fontSize: 15.0)),
+              const SizedBox(height: 2.0),
+              Row(
+                children: [
+                  _IconData(iconData: Icons.star, label: '$ratings'),
+                  renderDot(),
+                  _IconData(iconData: Icons.receipt, label: '$ratingsCount'),
+                  renderDot(),
+                  _IconData(iconData: Icons.timelapse, label: '$deliveryTime분'),
+                  renderDot(),
+                  _IconData(iconData: Icons.monetization_on, label: deliveryFee == 0 ? '무료' : '$deliveryFee'),
+                ],
+              ),
+              if (isDetail && detail != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Text(detail!),
+                )
+            ],
+          ),
+        ),
       ],
     );
   }
