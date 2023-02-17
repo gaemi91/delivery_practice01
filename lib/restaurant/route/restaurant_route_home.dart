@@ -32,7 +32,7 @@ class RestaurantRouteHome extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
               final listItems = snapshot.data![index];
-              final ModelRestaurant modelRestaurant = ModelRestaurant.fromJson(json: listItems);
+              final ModelRestaurant modelRestaurant = ModelRestaurant.fromJson(listItems);
 
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
