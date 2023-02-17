@@ -34,7 +34,7 @@ class RestaurantRouteDetail extends StatelessWidget {
             return const Scaffold(body: Center(child: CircularProgressIndicator()));
           }
 
-          final items = ModelRestaurantDetail.fromJson(json: snapshot.data!);
+          final items = ModelRestaurantDetail.fromJson(snapshot.data!);
 
           return LayoutDefault(
             title: items.name,

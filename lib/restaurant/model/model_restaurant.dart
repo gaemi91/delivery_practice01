@@ -14,6 +14,7 @@ enum PriceRange {
 class ModelRestaurant {
   final String id;
   final String name;
+  @JsonKey(fromJson: UtilsData.pathToUrl)
   final String thumbUrl;
   final List<String> tags;
   final PriceRange priceRange;
@@ -25,7 +26,6 @@ class ModelRestaurant {
   ModelRestaurant({
     required this.id,
     required this.name,
-    @JsonKey(fromJson: Utils.pathToUrl)
     required this.thumbUrl,
     required this.tags,
     required this.priceRange,
@@ -35,10 +35,7 @@ class ModelRestaurant {
     required this.deliveryFee,
   });
 
-  factory ModelRestaurant.fromJson(Map<String,dynamic> json)=>_$ModelRestaurantFromJson(json);
+  factory ModelRestaurant.fromJson(Map<String, dynamic> json) => _$ModelRestaurantFromJson(json);
 
-  Map<String,dynamic> toJson() => _$ModelRestaurantToJson(this);
-
-
+  Map<String, dynamic> toJson() => _$ModelRestaurantToJson(this);
 }
-
