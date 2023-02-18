@@ -1,3 +1,4 @@
+import 'package:delivery_practice01/common/const/data.dart';
 import 'package:delivery_practice01/restaurant/model/model_restaurant_detail.dart';
 import 'package:dio/dio.dart' hide Headers;
 import 'package:retrofit/retrofit.dart';
@@ -13,7 +14,7 @@ abstract class RepositoryRestaurant {
 
   @GET('/{id}')
   @Headers({
-    'authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAY29kZWZhY3RvcnkuYWkiLCJzdWIiOiJmNTViMzJkMi00ZDY4LTRjMWUtYTNjYS1kYTlkN2QwZDkyZTUiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNjc2NjQ3NzA1LCJleHAiOjE2NzY2NDgwMDV9.UNlMqtUnkjxM27O8g4E_1T0bfSbIsKDAq7wA0rLuKcE'
+    Token_key_Access: 'true',
   })
   Future<ModelRestaurantDetail> getRestaurantDetail({
     @Path() required String id,
