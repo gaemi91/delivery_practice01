@@ -1,4 +1,5 @@
 import 'package:delivery_practice01/common/const/data.dart';
+import 'package:delivery_practice01/common/dio/dio.dart';
 import 'package:delivery_practice01/restaurant/component/restaurant_card.dart';
 import 'package:delivery_practice01/restaurant/model/model_restaurant.dart';
 import 'package:delivery_practice01/restaurant/route/restaurant_route_detail.dart';
@@ -9,6 +10,11 @@ class RestaurantRouteHome extends StatelessWidget {
   const RestaurantRouteHome({Key? key}) : super(key: key);
 
   Future<List> paginateRestaurant() async {
+    final dio = Dio();
+
+    dio.interceptors.add(CustomInterceptor(storage: storage));
+
+
     final accessToken = await storage.read(key: Token_key_Access);
 
     final resp = await dio.get(

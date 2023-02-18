@@ -17,6 +17,8 @@ class RestaurantRouteDetail extends StatelessWidget {
   }) : super(key: key);
 
   Future<ModelRestaurantDetail> getRestaurantDetail() async {
+    final dio = Dio();
+
     final repository = RepositoryRestaurant(dio,baseUrl: 'http://$ip/restaurant');
 
     dio.interceptors.add(CustomInterceptor(storage: storage));
