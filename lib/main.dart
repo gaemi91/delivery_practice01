@@ -1,4 +1,4 @@
-import 'package:delivery_practice01/user/route/user_route_login.dart';
+import 'package:delivery_practice01/common/route/route_splash.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,10 +12,8 @@ class _App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'notosans'
-      ),
-      home: UserRouteLogIn()
+      theme: ThemeData(fontFamily: 'notosans'),
+      home: const RouteSplash(),
     );
   }
 }
