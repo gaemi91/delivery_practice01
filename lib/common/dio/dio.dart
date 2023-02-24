@@ -14,10 +14,10 @@ class CustomInterceptor extends Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     logger.i('[REQ] [${options.method}] [${options.uri}]');
 
-    if (options.headers[Token_key_Access] == 'true') {
-      options.headers.remove(Token_key_Access);
+    if (options.headers[Token_Key_Access] == 'true') {
+      options.headers.remove(Token_Key_Access);
 
-      final accessToken = await storage.read(key: Token_key_Access);
+      final accessToken = await storage.read(key: Token_Key_Access);
 
       options.headers.addAll({'authorization': 'Bearer $accessToken'});
     }
@@ -59,13 +59,13 @@ class CustomInterceptor extends Interceptor {
           options: Options(headers: {'authorization': 'Bearer $refreshToken'}),
         );
 
-        final accessToken = resp.data[Token_key_Access];
+        final accessToken = resp.data[Token_Key_Access];
 
         final options = err.requestOptions;
 
         options.headers.addAll({'authorization': 'Bearer $accessToken'});
 
-        await storage.write(key: Token_key_Access, value: accessToken);
+        await storage.write(key: Token_Key_Access, value: accessToken);
 
         final response = await dio.fetch(options);
 

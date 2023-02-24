@@ -13,13 +13,13 @@ abstract class RepositoryRestaurant {
 
   @GET('/')
   @Headers({
-    Token_key_Access: 'true',
+    Token_Key_Access: 'true',
   })
   Future<ModelCursorPagination<ModelRestaurant>> paginate();
 
   @GET('/{id}')
   @Headers({
-    Token_key_Access: 'true',
+    Token_Key_Access: 'true',
   })
   Future<ModelRestaurantDetail> getRestaurantDetail({
     @Path() required String id,
