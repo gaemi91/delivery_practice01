@@ -1,8 +1,10 @@
 import 'package:delivery_practice01/common/const/data.dart';
+import 'package:delivery_practice01/common/dio/dio.dart';
 import 'package:delivery_practice01/common/layout/layout_default.dart';
 import 'package:delivery_practice01/product/component/product_card.dart';
 import 'package:delivery_practice01/restaurant/component/restaurant_card.dart';
 import 'package:delivery_practice01/restaurant/model/model_restaurant_detail.dart';
+import 'package:delivery_practice01/restaurant/repository/repository_restaurant.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -14,27 +16,24 @@ class RestaurantRouteDetail extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  Future<Map<String, dynamic>> getRestaurantDetail() async {
-    final accessToken = await storage.read(key: Token_key_Access);
+  Future<ModelRestaurantDetail> getRestaurantDetail() async {
+    dio.interceptors.add(CustomInterceptor(storage: storage));
 
-    final resp = await dio.get(
-      'http://$ip/restaurant/$id',
-      options: Options(headers: {'authorization': 'Bearer $accessToken'}),
-    );
+    final resp = RepositoryRestaurant(dio, baseUrl: 'http://$ip/restaurant');
 
-    return resp.data;
+    return resp.getRestaurantDetail(id: id);
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Map<String, dynamic>>(
+    return FutureBuilder<ModelRestaurantDetail>(
         future: getRestaurantDetail(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Scaffold(body: Center(child: CircularProgressIndicator()));
           }
 
-          final items = ModelRestaurantDetail.fromJson(json: snapshot.data!);
+          final items = snapshot.data!;
 
           return LayoutDefault(
             title: items.name,

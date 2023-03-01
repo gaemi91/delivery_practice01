@@ -1,7 +1,12 @@
-import 'package:delivery_practice01/common/const/data.dart';
+import 'package:delivery_practice01/common/utils/utils_data.dart';
 import 'package:delivery_practice01/restaurant/model/model_restaurant.dart';
 import 'package:delivery_practice01/restaurant/model/model_restaurant_detail_product.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'model_restaurant_detail.g.dart';
+
+
+@JsonSerializable()
 class ModelRestaurantDetail extends ModelRestaurant {
   final String detail;
   final List<ModelRestaurantDetailProduct> products;
@@ -20,21 +25,5 @@ class ModelRestaurantDetail extends ModelRestaurant {
     required this.products,
   });
 
-  factory ModelRestaurantDetail.fromJson({required Map<String, dynamic> json}) {
-    return ModelRestaurantDetail(
-      id: json['id'],
-      name: json['name'],
-      thumbUrl: 'http://$ip${json['thumbUrl']}',
-      tags: List.from(json['tags']),
-      priceRange: PriceRange.values.firstWhere((e) => e.name == json['priceRange']),
-      ratings: json['ratings'],
-      ratingsCount: json['ratingsCount'],
-      deliveryTime: json['deliveryTime'],
-      deliveryFee: json['deliveryFee'],
-      detail: json['detail'],
-      products: json['products']
-          .map<ModelRestaurantDetailProduct>((e) => ModelRestaurantDetailProduct.fromJson(json: e))
-          .toList(),
-    );
-  }
+  factory ModelRestaurantDetail.fromJson(Map<String, dynamic> json) => _$ModelRestaurantDetailFromJson(json);
 }
