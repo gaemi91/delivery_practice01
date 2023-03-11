@@ -1,5 +1,6 @@
 import 'package:delivery_practice01/common/const/colors.dart';
 import 'package:delivery_practice01/common/layout/layout_default.dart';
+import 'package:delivery_practice01/product/route/product_route_home.dart';
 import 'package:delivery_practice01/restaurant/route/restaurant_route_home.dart';
 import 'package:flutter/material.dart';
 
@@ -43,7 +44,7 @@ class _CommonRouteTapState extends State<CommonRouteTap> with SingleTickerProvid
         physics: NeverScrollableScrollPhysics(),
         children: [
           RestaurantRouteHome(),
-          Center(child: Text('음식')),
+          ProductRouteHome(),
           Center(child: Text('주문')),
           Center(child: Text('프로필')),
         ],

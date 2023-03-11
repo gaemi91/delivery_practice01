@@ -1,15 +1,16 @@
 import 'package:delivery_practice01/common/const/colors.dart';
+import 'package:delivery_practice01/product/model/model_product.dart';
 import 'package:delivery_practice01/restaurant/model/model_restaurant_detail_product.dart';
 import 'package:flutter/material.dart';
 
-class ProductCard extends StatelessWidget {
+class RestaurantProductCard extends StatelessWidget {
   final String id;
   final String name;
   final String imgUrl;
   final String detail;
   final int price;
 
-  const ProductCard({
+  const RestaurantProductCard({
     required this.id,
     required this.name,
     required this.imgUrl,
@@ -18,8 +19,18 @@ class ProductCard extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  factory ProductCard.fromModel({required ModelRestaurantDetailProduct model}) {
-    return ProductCard(
+  factory RestaurantProductCard.fromModelProduct({required ModelProduct model}) {
+    return RestaurantProductCard(
+      id: model.id,
+      name: model.name,
+      imgUrl: model.imgUrl,
+      detail: model.detail,
+      price: model.price,
+    );
+  }
+
+  factory RestaurantProductCard.fromModelRestaurantDetailProduct({required ModelRestaurantDetailProduct model}) {
+    return RestaurantProductCard(
       id: model.id,
       name: model.name,
       imgUrl: model.imgUrl,

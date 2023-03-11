@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'repository_restaurant.dart';
+part of 'repository_restaurant_rating.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'repository_restaurant.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _RepositoryRestaurant implements RepositoryRestaurant {
-  _RepositoryRestaurant(
+class _RepositoryRestaurantRating implements RepositoryRestaurantRating {
+  _RepositoryRestaurantRating(
     this._dio, {
     this.baseUrl,
   });
@@ -19,7 +19,7 @@ class _RepositoryRestaurant implements RepositoryRestaurant {
   String? baseUrl;
 
   @override
-  Future<CursorPagination<ModelRestaurant>> paginate(
+  Future<CursorPagination<ModelRating>> paginate(
       {cursorPaginationParams = const CursorPaginationParams()}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -30,7 +30,7 @@ class _RepositoryRestaurant implements RepositoryRestaurant {
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<CursorPagination<ModelRestaurant>>(Options(
+        _setStreamType<CursorPagination<ModelRating>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -42,34 +42,10 @@ class _RepositoryRestaurant implements RepositoryRestaurant {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = CursorPagination<ModelRestaurant>.fromJson(
+    final value = CursorPagination<ModelRating>.fromJson(
       _result.data!,
-      (json) => ModelRestaurant.fromJson(json as Map<String, dynamic>),
+      (json) => ModelRating.fromJson(json as Map<String, dynamic>),
     );
-    return value;
-  }
-
-  @override
-  Future<ModelRestaurantDetail> getRestaurantDetail({required id}) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'accessToken': 'true'};
-    _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ModelRestaurantDetail>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              '/${id}',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ModelRestaurantDetail.fromJson(_result.data!);
     return value;
   }
 
