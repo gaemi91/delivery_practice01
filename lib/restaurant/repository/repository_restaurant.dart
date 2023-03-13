@@ -23,7 +23,7 @@ abstract class RepositoryRestaurant {
   @GET('/')
   @Headers({Token_Key_Access: 'true'})
   Future<CursorPagination<ModelRestaurant>> paginate({
-    @Queries() CursorPaginationMore? cursorPaginationMore = const CursorPaginationMore(),
+    @Queries() ModelCursorPaginationMore? cursorPaginationMore = const ModelCursorPaginationMore(),
   });
 
   @GET('/{id}')

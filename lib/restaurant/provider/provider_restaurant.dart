@@ -1,8 +1,10 @@
 import 'package:delivery_practice01/common/model/model_cursor_pagination.dart';
 import 'package:delivery_practice01/common/model/model_cursor_pagination_more.dart';
-import 'package:delivery_practice01/restaurant/model/model_restaurant.dart';
 import 'package:delivery_practice01/restaurant/repository/repository_restaurant.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final stateNotifierProviderRestaurant = StateNotifierProvider<StateNotifierRestaurant, CursorPaginationBase>(
+    (ref) => StateNotifierRestaurant(repositoryRestaurant: ref.watch(providerRepositoryRestaurant)));
 
 class StateNotifierRestaurant extends StateNotifier<CursorPaginationBase> {
   final RepositoryRestaurant repositoryRestaurant;
@@ -41,7 +43,7 @@ class StateNotifierRestaurant extends StateNotifier<CursorPaginationBase> {
         return;
       }
 
-      CursorPaginationMore cursorPaginationMore = CursorPaginationMore(count: countFetch);
+      ModelCursorPaginationMore cursorPaginationMore = ModelCursorPaginationMore(count: countFetch);
 
       //데이터를 추가로 더 가져오는 상황
       if (fetchMore) {

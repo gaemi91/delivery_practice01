@@ -3,18 +3,18 @@ import 'package:json_annotation/json_annotation.dart';
 part 'model_cursor_pagination_more.g.dart';
 
 @JsonSerializable()
-class CursorPaginationMore {
+class ModelCursorPaginationMore {
   final String? after;
   final int? count;
 
-  const CursorPaginationMore({this.after, this.count});
+  const ModelCursorPaginationMore({this.after, this.count});
 
-  factory CursorPaginationMore.fromJson(Map<String, dynamic> json) => _$CursorPaginationMoreFromJson(json);
+  factory ModelCursorPaginationMore.fromJson(Map<String, dynamic> json) => _$ModelCursorPaginationMoreFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CursorPaginationMoreToJson(this);
+  Map<String, dynamic> toJson() => _$ModelCursorPaginationMoreToJson(this);
 
-  CursorPaginationMore copyWith({String? after, int? count}) {
-    return CursorPaginationMore(
+  ModelCursorPaginationMore copyWith({String? after, int? count}) {
+    return ModelCursorPaginationMore(
       count: count ?? this.count,
       after: after ?? this.after,
     );

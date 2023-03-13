@@ -6,15 +6,15 @@ part of 'model_cursor_pagination_more.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CursorPaginationMore _$CursorPaginationMoreFromJson(
+ModelCursorPaginationMore _$ModelCursorPaginationMoreFromJson(
         Map<String, dynamic> json) =>
-    CursorPaginationMore(
+    ModelCursorPaginationMore(
       after: json['after'] as String?,
       count: json['count'] as int?,
     );
 
-Map<String, dynamic> _$CursorPaginationMoreToJson(
-        CursorPaginationMore instance) =>
+Map<String, dynamic> _$ModelCursorPaginationMoreToJson(
+        ModelCursorPaginationMore instance) =>
     <String, dynamic>{
       'after': instance.after,
       'count': instance.count,
