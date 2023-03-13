@@ -1,5 +1,6 @@
 import 'package:delivery_practice01/common/const/data.dart';
 import 'package:delivery_practice01/common/dio/dio.dart';
+import 'package:delivery_practice01/common/model/model_cursor_pagination.dart';
 import 'package:delivery_practice01/restaurant/component/restaurant_card.dart';
 import 'package:delivery_practice01/restaurant/model/model_restaurant.dart';
 import 'package:delivery_practice01/restaurant/repository/repository_restaurant.dart';
@@ -15,18 +16,10 @@ class RestaurantRouteHome extends ConsumerStatefulWidget {
 }
 
 class _RestaurantRouteHomeState extends ConsumerState<RestaurantRouteHome> {
-  Future<List<ModelRestaurant>> paginateRestaurant() async {
-    final dio = ref.watch(providerDio);
-
-    final repository = await RepositoryRestaurant(dio, baseUrl: 'http://$ip/restaurant').paginate();
-
-    return repository.data;
-  }
-
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<ModelRestaurant>>(
-        future: paginateRestaurant(),
+    return FutureBuilder<CursorPagination<ModelRestaurant>>(
+        future: ref.watch(providerRepositoryRestaurant).paginate(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
@@ -35,7 +28,7 @@ class _RestaurantRouteHomeState extends ConsumerState<RestaurantRouteHome> {
           return ListView.separated(
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
-              final modelRestaurant = snapshot.data![index];
+              final modelRestaurant = snapshot.data!.data[index];
 
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -52,7 +45,7 @@ class _RestaurantRouteHomeState extends ConsumerState<RestaurantRouteHome> {
               );
             },
             separatorBuilder: (context, index) => const SizedBox(height: 10),
-            itemCount: snapshot.data!.length,
+            itemCount: snapshot.data!.data.length,
           );
         });
   }
