@@ -6,7 +6,7 @@ part of 'model_cursor_pagination.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CursorPagination<T> _$ModelCursorPaginationFromJson<T>(
+CursorPagination<T> _$CursorPaginationFromJson<T>(
   Map<String, dynamic> json,
   T Function(Object? json) fromJsonT,
 ) =>
@@ -16,7 +16,7 @@ CursorPagination<T> _$ModelCursorPaginationFromJson<T>(
       data: (json['data'] as List<dynamic>).map(fromJsonT).toList(),
     );
 
-Map<String, dynamic> _$ModelCursorPaginationToJson<T>(
+Map<String, dynamic> _$CursorPaginationToJson<T>(
   CursorPagination<T> instance,
   Object? Function(T value) toJsonT,
 ) =>

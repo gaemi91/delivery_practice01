@@ -1,5 +1,3 @@
-import 'package:delivery_practice01/common/const/data.dart';
-import 'package:delivery_practice01/common/dio/dio.dart';
 import 'package:delivery_practice01/common/layout/layout_default.dart';
 import 'package:delivery_practice01/product/component/product_card.dart';
 import 'package:delivery_practice01/restaurant/component/restaurant_card.dart';
