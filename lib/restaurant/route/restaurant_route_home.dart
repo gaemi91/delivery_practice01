@@ -1,6 +1,7 @@
 import 'package:delivery_practice01/common/const/data.dart';
 import 'package:delivery_practice01/common/dio/dio.dart';
 import 'package:delivery_practice01/restaurant/component/restaurant_card.dart';
+import 'package:delivery_practice01/restaurant/model/model_restaurant.dart';
 import 'package:delivery_practice01/restaurant/repository/repository_restaurant.dart';
 import 'package:delivery_practice01/restaurant/route/restaurant_route_detail.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class RestaurantRouteHome extends ConsumerStatefulWidget {
 }
 
 class _RestaurantRouteHomeState extends ConsumerState<RestaurantRouteHome> {
-  Future<List> paginateRestaurant() async {
+  Future<List<ModelRestaurant>> paginateRestaurant() async {
     final dio = ref.watch(providerDio);
 
     final repository = await RepositoryRestaurant(dio, baseUrl: 'http://$ip/restaurant').paginate();
@@ -24,7 +25,7 @@ class _RestaurantRouteHomeState extends ConsumerState<RestaurantRouteHome> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List>(
+    return FutureBuilder<List<ModelRestaurant>>(
         future: paginateRestaurant(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {

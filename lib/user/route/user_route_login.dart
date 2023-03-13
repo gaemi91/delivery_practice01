@@ -4,7 +4,7 @@ import 'package:delivery_practice01/common/component/custom_text_form_field.dart
 import 'package:delivery_practice01/common/const/colors.dart';
 import 'package:delivery_practice01/common/const/data.dart';
 import 'package:delivery_practice01/common/layout/layout_default.dart';
-import 'package:delivery_practice01/secure_storage/secure_storage.dart';
+import 'package:delivery_practice01/common/secure_storage/secure_storage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
