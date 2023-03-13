@@ -12,15 +12,11 @@ abstract class RepositoryRestaurant {
   factory RepositoryRestaurant(Dio dio, {String baseUrl}) = _RepositoryRestaurant;
 
   @GET('/')
-  @Headers({
-    Token_Key_Access: 'true',
-  })
-  Future<ModelCursorPagination<ModelRestaurant>> paginate();
+  @Headers({Token_Key_Access: 'true'})
+  Future<CursorPagination<ModelRestaurant>> paginate();
 
   @GET('/{id}')
-  @Headers({
-    Token_Key_Access: 'true',
-  })
+  @Headers({Token_Key_Access: 'true'})
   Future<ModelRestaurantDetail> getRestaurantDetail({
     @Path() required String id,
     //@Path('id') required String sid,

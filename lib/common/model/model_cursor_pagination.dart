@@ -5,18 +5,18 @@ part 'model_cursor_pagination.g.dart';
 @JsonSerializable(
   genericArgumentFactories: true,
 )
-class ModelCursorPagination<T> {
+class CursorPagination<T> {
   final ModelCursorPaginationMeta meta;
   final List<T> data;
 
-  ModelCursorPagination({required this.meta, required this.data,});
+  CursorPagination({
+    required this.meta,
+    required this.data,
+  });
 
-  factory ModelCursorPagination.fromJson(Map<String,dynamic> json,T Function(Object? json) fromJsonT)
-  => _$ModelCursorPaginationFromJson(json,fromJsonT);
-
+  factory CursorPagination.fromJson(Map<String, dynamic> json, T Function(Object? json) fromJsonT) =>
+      _$ModelCursorPaginationFromJson(json, fromJsonT);
 }
-
-
 
 @JsonSerializable()
 class ModelCursorPaginationMeta {

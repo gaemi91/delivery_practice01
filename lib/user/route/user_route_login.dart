@@ -4,17 +4,19 @@ import 'package:delivery_practice01/common/component/custom_text_form_field.dart
 import 'package:delivery_practice01/common/const/colors.dart';
 import 'package:delivery_practice01/common/const/data.dart';
 import 'package:delivery_practice01/common/layout/layout_default.dart';
+import 'package:delivery_practice01/secure_storage/secure_storage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class UserRouteLogIn extends StatefulWidget {
+class UserRouteLogIn extends ConsumerStatefulWidget {
   const UserRouteLogIn({Key? key}) : super(key: key);
 
   @override
-  State<UserRouteLogIn> createState() => _UserRouteLogInState();
+  ConsumerState<UserRouteLogIn> createState() => _UserRouteLogInState();
 }
 
-class _UserRouteLogInState extends State<UserRouteLogIn> {
+class _UserRouteLogInState extends ConsumerState<UserRouteLogIn> {
   String inputId = '';
   String inputPass = '';
 
@@ -69,6 +71,9 @@ class _UserRouteLogInState extends State<UserRouteLogIn> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () async {
+                          final dio = Dio();
+                          final storage = ref.read(providerStorage);
+
                           final rawIdPass = '$inputId:$inputPass';
 
                           Codec<String, String> stringToBase64 = utf8.fuse(base64);
@@ -76,7 +81,7 @@ class _UserRouteLogInState extends State<UserRouteLogIn> {
 
                           final resp = await dio.post(
                             'http://$ip/auth/login',
-                            options: Options(headers: {'authorization': 'Basic $token'}),
+                            options: Options(headers: {authorization: 'Basic $token'}),
                           );
 
                           await storage.write(key: Token_Key_Access, value: resp.data[Token_Key_Access]);

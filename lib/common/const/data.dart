@@ -8,8 +8,4 @@ final ip = Platform.isMacOS ? ipSimulator : ipEmulator;
 
 const Token_Key_Access = 'accessToken';
 const Token_key_Refresh = 'refreshToken';
-
-final dio = Dio();
-FlutterSecureStorage storage = const FlutterSecureStorage();
-
-
+const authorization = 'authorization';

@@ -19,14 +19,14 @@ class _RepositoryRestaurant implements RepositoryRestaurant {
   String? baseUrl;
 
   @override
-  Future<ModelCursorPagination<ModelRestaurant>> paginate() async {
+  Future<CursorPagination<ModelRestaurant>> paginate() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ModelCursorPagination<ModelRestaurant>>(Options(
+        _setStreamType<CursorPagination<ModelRestaurant>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -38,7 +38,7 @@ class _RepositoryRestaurant implements RepositoryRestaurant {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ModelCursorPagination<ModelRestaurant>.fromJson(
+    final value = CursorPagination<ModelRestaurant>.fromJson(
       _result.data!,
       (json) => ModelRestaurant.fromJson(json as Map<String, dynamic>),
     );

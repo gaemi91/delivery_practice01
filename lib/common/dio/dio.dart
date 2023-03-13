@@ -1,7 +1,18 @@
 import 'package:delivery_practice01/common/const/data.dart';
 import 'package:delivery_practice01/main.dart';
+import 'package:delivery_practice01/secure_storage/secure_storage.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+final providerDio = Provider<Dio>((ref) {
+  final dio = Dio();
+  final storage = ref.watch(providerStorage);
+
+  dio.interceptors.add(CustomInterceptor(storage: storage));
+
+  return dio;
+});
 
 class CustomInterceptor extends Interceptor {
   final FlutterSecureStorage storage;
@@ -12,14 +23,14 @@ class CustomInterceptor extends Interceptor {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-    logger.i('[REQ] [${options.method}] [${options.uri}]');
+    logger.d('[REQ] [${options.method}] [${options.uri}]');
 
     if (options.headers[Token_Key_Access] == 'true') {
       options.headers.remove(Token_Key_Access);
 
       final accessToken = await storage.read(key: Token_Key_Access);
 
-      options.headers.addAll({'authorization': 'Bearer $accessToken'});
+      options.headers.addAll({authorization: 'Bearer $accessToken'});
     }
 
     if (options.headers[Token_key_Refresh] == 'true') {
@@ -27,7 +38,7 @@ class CustomInterceptor extends Interceptor {
 
       final refreshToken = await storage.read(key: Token_key_Refresh);
 
-      options.headers.addAll({'authorization': 'Bearer $refreshToken'});
+      options.headers.addAll({authorization: 'Bearer $refreshToken'});
     }
 
     return super.onRequest(options, handler);
@@ -35,13 +46,13 @@ class CustomInterceptor extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    logger.i('[RES] [${response.requestOptions.method}] [${response.requestOptions.uri}]');
+    logger.d('[RES] [${response.requestOptions.method}] [${response.requestOptions.uri}]');
     super.onResponse(response, handler);
   }
 
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) async {
-    logger.e('[ERR] [${err.requestOptions.method}] [${err.requestOptions.uri}]');
+    logger.d('[ERR] [${err.requestOptions.method}] [${err.requestOptions.uri}]');
 
     final refreshToken = await storage.read(key: Token_key_Refresh);
 
@@ -54,16 +65,18 @@ class CustomInterceptor extends Interceptor {
 
     if (isStatus401 && !isPathRefresh) {
       try {
+        final dio = Dio();
+
         final resp = await dio.post(
           'http://$ip/auth/token',
-          options: Options(headers: {'authorization': 'Bearer $refreshToken'}),
+          options: Options(headers: {authorization: 'Bearer $refreshToken'}),
         );
 
         final accessToken = resp.data[Token_Key_Access];
 
         final options = err.requestOptions;
 
-        options.headers.addAll({'authorization': 'Bearer $accessToken'});
+        options.headers.addAll({authorization: 'Bearer $accessToken'});
 
         await storage.write(key: Token_Key_Access, value: accessToken);
 
