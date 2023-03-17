@@ -5,11 +5,15 @@ import 'package:delivery_practice01/common/const/colors.dart';
 import 'package:delivery_practice01/common/const/data.dart';
 import 'package:delivery_practice01/common/layout/layout_default.dart';
 import 'package:delivery_practice01/common/secure_storage/secure_storage.dart';
+import 'package:delivery_practice01/user/model/model_user.dart';
+import 'package:delivery_practice01/user/provider/provider_user_me.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class UserRouteLogIn extends ConsumerStatefulWidget {
+  static String get routeName => 'login';
+
   const UserRouteLogIn({Key? key}) : super(key: key);
 
   @override
@@ -22,7 +26,7 @@ class _UserRouteLogInState extends ConsumerState<UserRouteLogIn> {
 
   @override
   Widget build(BuildContext context) {
-    final dio = Dio();
+    final state = ref.watch(stateNotifierProviderUserMe);
 
     return LayoutDefault(
       child: SafeArea(
@@ -72,23 +76,14 @@ class _UserRouteLogInState extends ConsumerState<UserRouteLogIn> {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () async {
-                          final storage = ref.read(providerSecureStorage);
-                          final rawIdPass = '$inputId:$inputPass';
-
-                          Codec<String, String> stringToBase64 = utf8.fuse(base64);
-                          final token = stringToBase64.encoder.convert(rawIdPass);
-
-                          final resp = await dio.post(
-                            'http://$ip/auth/login',
-                            options: Options(headers: {authorization: 'Basic $token'}),
-                          );
-
-                          await storage.write(key: Token_key_Access, value: resp.data[Token_key_Access]);
-                          await storage.write(key: Token_key_Refresh, value: resp.data[Token_key_Refresh]);
-
-                          Navigator.of(context).push(MaterialPageRoute(builder: (_) => CommonRouteTap()));
-                        },
+                        onPressed: state is ModelUserLoading
+                            ? null
+                            : () async {
+                                ref.read(stateNotifierProviderUserMe.notifier).logIn(
+                                      username: inputId,
+                                      password: inputPass,
+                                    );
+                              },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color_Main,
                         ),

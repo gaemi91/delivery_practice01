@@ -1,4 +1,4 @@
-import 'package:delivery_practice01/common/route/common_route_splash.dart';
+import 'package:delivery_practice01/common/provider/provider_go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
@@ -14,15 +14,17 @@ void main() {
   );
 }
 
-class _App extends StatelessWidget {
+class _App extends ConsumerWidget {
   const _App({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(providerGoRouter);
+
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: 'notosans'),
-      home: const CommonRouteSplash(),
+      theme: ThemeData(fontFamily: 'Notosans'),
+      routerConfig: router,
     );
   }
 }

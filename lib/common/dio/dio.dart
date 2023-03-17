@@ -1,6 +1,7 @@
 import 'package:delivery_practice01/common/const/data.dart';
 import 'package:delivery_practice01/common/secure_storage/secure_storage.dart';
 import 'package:delivery_practice01/main.dart';
+import 'package:delivery_practice01/user/provider/provider_auth.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,31 +10,33 @@ final providerDio = Provider<Dio>((ref) {
   final dio = Dio();
   final storage = ref.watch(providerSecureStorage);
 
-  dio.interceptors.add(CustomInterceptor(storage: storage));
+  dio.interceptors.add(CustomInterceptor(storage: storage, ref: ref));
 
   return dio;
 });
 
 class CustomInterceptor extends Interceptor {
   final FlutterSecureStorage storage;
+  final Ref ref;
 
-  CustomInterceptor({required this.storage});
+  CustomInterceptor({required this.storage, required this.ref});
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     logger.i('[REQ] [${options.method}] [${options.uri}]');
 
     if (options.headers[Token_key_Access] == 'true') {
-      final accessToken = await storage.read(key: Token_key_Access);
-
       options.headers.remove(Token_key_Access);
+
+      final accessToken = await storage.read(key: Token_key_Access);
 
       options.headers.addAll({authorization: 'Bearer $accessToken'});
     }
-    if (options.headers[Token_key_Refresh] == 'true') {
-      final refreshToken = await storage.read(key: Token_key_Refresh);
 
+    if (options.headers[Token_key_Refresh] == 'true') {
       options.headers.remove(Token_key_Refresh);
+
+      final refreshToken = await storage.read(key: Token_key_Refresh);
 
       options.headers.addAll({authorization: 'Bearer $refreshToken'});
     }
@@ -79,6 +82,8 @@ class CustomInterceptor extends Interceptor {
 
         return handler.resolve(response);
       } on DioError catch (e) {
+        ref.read(changeNotifierProviderAuth.notifier).logOut();
+
         return handler.reject(e);
       }
     }

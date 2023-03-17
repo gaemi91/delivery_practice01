@@ -5,6 +5,8 @@ import 'package:delivery_practice01/restaurant/route/restaurant_route_home.dart'
 import 'package:flutter/material.dart';
 
 class CommonRouteTap extends StatefulWidget {
+  static String get routeName => 'home';
+
   const CommonRouteTap({Key? key}) : super(key: key);
 
   @override

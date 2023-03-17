@@ -3,8 +3,18 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'model_user.g.dart';
 
+abstract class ModelUserBase {}
+
+class ModelUserLoading extends ModelUserBase {}
+
+class ModelUserError extends ModelUserBase {
+  final String message;
+
+  ModelUserError({required this.message});
+}
+
 @JsonSerializable()
-class ModelUser {
+class ModelUser extends ModelUserBase {
   final String id;
   final String username;
   @JsonKey(fromJson: UtilsData.pathToUrl)
