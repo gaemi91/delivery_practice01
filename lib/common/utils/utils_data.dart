@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:intl/intl.dart';
 import 'package:delivery_practice01/common/const/data.dart';
 
 class UtilsData {
@@ -16,4 +16,6 @@ class UtilsData {
 
     return stringToBase64.encode(value);
   }
+
+  static var f = NumberFormat('###,###,###');
 }

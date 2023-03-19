@@ -1,6 +1,8 @@
+import 'package:delivery_practice01/common/const/colors.dart';
 import 'package:delivery_practice01/common/layout/layout_default.dart';
 import 'package:delivery_practice01/common/model/model_cursor_pagination.dart';
 import 'package:delivery_practice01/common/utils/utils_pagination.dart';
+import 'package:delivery_practice01/product/model/model_product.dart';
 import 'package:delivery_practice01/restaurant/component/restaurant_product_card.dart';
 import 'package:delivery_practice01/rating/component/rating_card.dart';
 import 'package:delivery_practice01/rating/model/model_rating.dart';
@@ -8,9 +10,13 @@ import 'package:delivery_practice01/restaurant/component/restaurant_card.dart';
 import 'package:delivery_practice01/restaurant/model/model_restaurant_detail.dart';
 import 'package:delivery_practice01/restaurant/provider/provider_restaurant.dart';
 import 'package:delivery_practice01/restaurant/provider/provider_restaurant_rating.dart';
+import 'package:delivery_practice01/restaurant/route/restaurant_route_basket.dart';
+import 'package:delivery_practice01/user/provider/provider_basket.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:skeletons/skeletons.dart';
+import 'package:badges/badges.dart' as badges;
 
 class RestaurantRouteDetail extends ConsumerStatefulWidget {
   static String get routeName => 'restaurantDetail';
@@ -55,6 +61,7 @@ class _RestaurantRouteDetailState extends ConsumerState<RestaurantRouteDetail> {
   Widget build(BuildContext context) {
     final stateRestaurant = ref.watch(providerRestaurantDetail(widget.id));
     final stateRating = ref.watch(stateNotifierProviderRestaurantRating(widget.id));
+    final stateBasket = ref.watch(providerBasket);
 
     if (stateRestaurant == null) {
       return const LayoutDefault(child: Center(child: CircularProgressIndicator()));
@@ -62,6 +69,21 @@ class _RestaurantRouteDetailState extends ConsumerState<RestaurantRouteDetail> {
 
     return LayoutDefault(
       title: stateRestaurant.name,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.pushNamed(RestaurantRouteBasket.routeName);
+        },
+        backgroundColor: Color_Main,
+        child: badges.Badge(
+          showBadge: stateBasket.isNotEmpty,
+          badgeContent: Text(
+            stateBasket.fold<int>(0, (p, n) => p + n.count).toString(),
+            style: const TextStyle(fontSize: 12.0, color: Color_Main),
+          ),
+          badgeStyle: const badges.BadgeStyle(elevation: 0, badgeColor: Colors.white),
+          child: const Icon(Icons.shopping_bag_outlined),
+        ),
+      ),
       child: CustomScrollView(
         controller: scrollController,
         physics: const BouncingScrollPhysics(),
@@ -90,9 +112,23 @@ class _RestaurantRouteDetailState extends ConsumerState<RestaurantRouteDetail> {
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
                     final products = stateRestaurant.products[index];
+
                     return Padding(
                       padding: const EdgeInsets.only(top: 10.0),
-                      child: RestaurantProductCard.fromModelRestaurantDetailProduct(model: products),
+                      child: InkWell(
+                        onTap: () {
+                          ref.read(providerBasket.notifier).addToBasket(
+                                  modelProduct: ModelProduct(
+                                id: products.id,
+                                restaurant: stateRestaurant,
+                                name: products.name,
+                                imgUrl: products.imgUrl,
+                                detail: products.detail,
+                                price: products.price,
+                              ));
+                        },
+                        child: RestaurantProductCard.fromModelRestaurantDetailProduct(model: products),
+                      ),
                     );
                   },
                   childCount: stateRestaurant.products.length,

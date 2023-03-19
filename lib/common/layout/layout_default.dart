@@ -5,12 +5,14 @@ class LayoutDefault extends StatelessWidget {
   final Color colorBG;
   final String? title;
   final Widget? bottomNavigator;
+  final Widget? floatingActionButton;
 
   const LayoutDefault({
     required this.child,
     this.colorBG = Colors.white,
     this.title,
     this.bottomNavigator,
+    this.floatingActionButton,
     Key? key,
   }) : super(key: key);
 
@@ -29,6 +31,7 @@ class LayoutDefault extends StatelessWidget {
             ),
       body: child,
       bottomNavigationBar: bottomNavigator,
+      floatingActionButton: floatingActionButton,
     );
   }
 }

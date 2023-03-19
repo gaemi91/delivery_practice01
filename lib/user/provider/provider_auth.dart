@@ -1,5 +1,6 @@
 import 'package:delivery_practice01/common/route/common_route_splash.dart';
 import 'package:delivery_practice01/common/route/common_route_tap.dart';
+import 'package:delivery_practice01/restaurant/route/restaurant_route_basket.dart';
 import 'package:delivery_practice01/restaurant/route/restaurant_route_detail.dart';
 import 'package:delivery_practice01/user/model/model_user.dart';
 import 'package:delivery_practice01/user/provider/provider_user_me.dart';
@@ -45,6 +46,11 @@ class ChangeNotifierAuth extends ChangeNotifier {
                 builder: (context, state) => RestaurantRouteDetail(id: state.params['rid']!),
               ),
             ]),
+        GoRoute(
+          path: '/basket',
+          name: RestaurantRouteBasket.routeName,
+          builder: (context, state) => const RestaurantRouteBasket(),
+        ),
       ];
 
   void logOut() {
